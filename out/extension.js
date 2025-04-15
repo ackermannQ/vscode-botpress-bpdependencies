@@ -84,6 +84,10 @@ function activate(context) {
             packageJson.scripts.build + "bp add -y && bp build";
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
         vscode.window.showInformationMessage("Added build script");
+    }), vscode.commands.registerCommand("extension.createIntegration", () => {
+        const terminal = vscode.window.createTerminal(`Botpress Init`);
+        terminal.sendText(`bp init`);
+        terminal.show();
     }));
 }
 exports.activate = activate;

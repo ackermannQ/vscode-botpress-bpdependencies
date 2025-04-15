@@ -14,10 +14,7 @@
     "Linters"
   ],
   "icon": "icon.png",
-  "activationEvents": [
-    "onCommand:extension.addBpDependency",
-    "onCommand:extension.removeBpDependency"
-  ],
+  "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -32,6 +29,10 @@
       {
         "command": "extension.addBuildScript",
         "title": "Add build script"
+      },
+      {
+        "command": "extension.createIntegration",
+        "title": "Create a new bot, integration or plugin"
       }
     ],
     "submenus": [
@@ -39,6 +40,10 @@
         "id": "botpress.packageJsonMenu",
         "label": "Botpress",
         "when": "resourceFilename == package.json"
+      },
+      {
+        "id": "botpress.scaffoldingMenu",
+        "label": "Botpress: Scaffolding"
       }
     ],
     "menus": {
@@ -46,6 +51,18 @@
         {
           "submenu": "botpress.packageJsonMenu",
           "when": "resourceFilename == package.json",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "submenu": "botpress.scaffoldingMenu",
+          "group": "navigation"
+        }
+      ],
+      "botpress.scaffoldingMenu": [
+        {
+          "command": "extension.createIntegration",
           "group": "navigation"
         }
       ],
