@@ -1,0 +1,77 @@
+{
+  "name": "botpress-tools",
+  "displayName": "Botpress tools Helper",
+  "description": "VSCode extension to manage build, bpDependencies in package.json",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.99.2"
+  },
+  "publisher": "ackermannQ",
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Snippets",
+    "Linters"
+  ],
+  "icon": "icon.png",
+  "activationEvents": [
+    "onCommand:extension.addBpDependency",
+    "onCommand:extension.removeBpDependency"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.addBpDependency",
+        "title": "Add bpDependency"
+      },
+      {
+        "command": "extension.removeBpDependency",
+        "title": "Remove bpDependency"
+      },
+      {
+        "command": "extension.addBuildScript",
+        "title": "Add build script"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "botpress.packageJsonMenu",
+        "label": "Botpress",
+        "when": "resourceFilename == package.json"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "botpress.packageJsonMenu",
+          "when": "resourceFilename == package.json",
+          "group": "navigation"
+        }
+      ],
+      "botpress.packageJsonMenu": [
+        {
+          "command": "extension.addBpDependency",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.removeBpDependency",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.addBuildScript",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.77.0",
+    "typescript": "^4.7.0",
+    "vscode": "^1.1.34"
+  }
+}
