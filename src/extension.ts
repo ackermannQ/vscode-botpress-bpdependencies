@@ -1,22 +1,25 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+import { openAi } from "./openAi";
+import { extensionSettings } from "./extensionSettings";
 
 export function activate(context: vscode.ExtensionContext) {
-  const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
-  const activeEditor = vscode.window.activeTextEditor;
-  if (!activeEditor) {
-    vscode.window.showErrorMessage("No active editor found.");
-    return;
-  }
-  const packageJsonPath = activeEditor.document.uri.fsPath;
-  const packageJsonfolderPath = path.dirname(packageJsonPath);
-
-  if (!workspaceRoot) return;
-
   context.subscriptions.push(
     vscode.commands.registerCommand("extension.addBpDependency", async () => {
-      const packageJsonPath = path.join(packageJsonfolderPath, "package.json");
+      const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+      const activeEditor = vscode.window.activeTextEditor;
+      if (!activeEditor) {
+        vscode.window.showErrorMessage("No active editor found.");
+        return;
+      }
+
+      let packageJsonPath = activeEditor.document.uri.fsPath;
+      const packageJsonfolderPath = path.dirname(packageJsonPath);
+
+      if (!workspaceRoot) return;
+
+      packageJsonPath = path.join(packageJsonfolderPath, "package.json");
       const interfacesPath = path.resolve(workspaceRoot, "interfaces");
       if (!fs.existsSync(interfacesPath)) {
         vscode.window.showErrorMessage(
@@ -47,10 +50,19 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "extension.removeBpDependency",
       async () => {
-        const packageJsonPath = path.join(
-          packageJsonfolderPath,
-          "package.json"
-        );
+        const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+        const activeEditor = vscode.window.activeTextEditor;
+        if (!activeEditor) {
+          vscode.window.showErrorMessage("No active editor found.");
+          return;
+        }
+
+        let packageJsonPath = activeEditor.document.uri.fsPath;
+        const packageJsonfolderPath = path.dirname(packageJsonPath);
+
+        if (!workspaceRoot) return;
+
+        packageJsonPath = path.join(packageJsonfolderPath, "package.json");
         const packageJson = JSON.parse(
           fs.readFileSync(packageJsonPath, "utf-8")
         );
@@ -69,7 +81,18 @@ export function activate(context: vscode.ExtensionContext) {
     ),
 
     vscode.commands.registerCommand("extension.addBuildScript", async () => {
-      const packageJsonPath = path.join(packageJsonfolderPath, "package.json");
+      const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+      const activeEditor = vscode.window.activeTextEditor;
+      if (!activeEditor) {
+        vscode.window.showErrorMessage("No active editor found.");
+        return;
+      }
+
+      let packageJsonPath = activeEditor.document.uri.fsPath;
+      const packageJsonfolderPath = path.dirname(packageJsonPath);
+
+      if (!workspaceRoot) return;
+      packageJsonPath = path.join(packageJsonfolderPath, "package.json");
 
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
       if (!packageJson.scripts.build) packageJson.scripts.build = "";
@@ -80,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       packageJson.scripts.build =
-        packageJson.scripts.build + " bp add -y && bp build";
+        packageJson.scripts.build + " && bp add -y && bp build";
       fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
       vscode.window.showInformationMessage("Added build script");
     }),
@@ -108,6 +131,69 @@ export function activate(context: vscode.ExtensionContext) {
           terminal.show();
         } else {
           vscode.window.showWarningMessage("No path selected.");
+        }
+      }
+    ),
+
+    vscode.commands.registerCommand(
+      "extension.generateHubFile",
+      async (uri: vscode.Uri) => {
+        if (uri && uri.fsPath.endsWith("hub.md")) {
+          const activeEditor = vscode.window.activeTextEditor;
+          if (!activeEditor) return;
+
+          const filePath = activeEditor.document.uri.fsPath;
+          const folderPath = path.dirname(filePath);
+          const packageJsonPath =
+            path.dirname(filePath) + path.sep + "package.json";
+
+          if (!fs.existsSync(packageJsonPath)) {
+            vscode.window.showErrorMessage(
+              "package.json not detected at " + packageJsonPath
+            );
+            return;
+          }
+
+          // This will be the check to subscribe
+          // const extensionSettingsService = extensionSettings(context);
+          // if (
+          //   !extensionSettingsService.userProvidedApiKey &&
+          //   extensionSettingsService.currentUsage >= 5
+          // ) {
+          //   vscode.window
+          //     .showInformationMessage(
+          //       "You've used all your free hub.md generations. Most users upgrade after seeing the value 😄",
+          //       "Upgrade",
+          //       "Enter API Key",
+          //       "Cancel"
+          //     )
+          //     .then((selection) => {
+          //       if (selection === "Upgrade") {
+          //         vscode.env.openExternal(
+          //           vscode.Uri.parse("https://your-upgrade-page.com")
+          //         );
+          //       } else if (selection === "Enter API Key") {
+          //         vscode.commands.executeCommand(
+          //           "workbench.action.openSettings",
+          //           "botpressHub.openaiApiKey"
+          //         );
+          //       }
+          //     });
+          //   return;
+          // }
+
+          const openAiService = await openAi(context);
+          const packageJson = openAiService.getPackageJsonContent(
+            path.dirname(filePath) + path.sep + "package.json"
+          );
+
+          const hubMd = await openAiService.generateHubMd(packageJson);
+
+          openAiService.writeHubMd(folderPath, hubMd);
+        } else {
+          vscode.window.showWarningMessage(
+            "This is not hub.md. Run this command in a hub.md file"
+          );
         }
       }
     )

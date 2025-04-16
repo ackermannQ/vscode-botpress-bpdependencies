@@ -16,6 +16,11 @@ A Visual Studio Code extension to streamline the development of [Botpress](https
   - Quickly bootstrap new bots, integrations or plugins from the VS Code context menu
   - Choose your destination folder and let the extension generate the structure
 
+- 📃 **Generate `hub.md` file**
+
+  - Generate a `hub.md` file based on your `package.json` information
+  - Use the AI to generate a concise and helpful `hub.md` that documents what this project is.
+
 ---
 
 ## 🚀 Getting Started
@@ -28,6 +33,8 @@ A Visual Studio Code extension to streamline the development of [Botpress](https
 
 ## 📦 Example
 
+### Managing bpDependencies
+
 ```json
 "bpDependencies": {
   "files-readonly": "../../interfaces/files-readonly",
@@ -35,8 +42,21 @@ A Visual Studio Code extension to streamline the development of [Botpress](https
 }
 ```
 
+In the package.json file:
 Right-click → Botpress > Add Dependency  
 Right-click → Botpress > Remove Dependency
+
+### Create a new bot, integration or plugin
+
+Right-click on tree view, on the `Integrations`, `Bots` or `Plugins` → Botpress: Scaffolding > Create a new bot, integration or plugin
+
+### Generate hub.md file
+
+Save some redacting time!
+
+Right-click inside an empty hud.md file, Botpress > Generate hub.md file.  
+This requires an OpenAI API key to be set in the `botpressHub.openaiApiKey` setting.
+The generated file should be reviewed before committing it.
 
 ---
 
@@ -53,7 +73,7 @@ Right-click → Botpress > Remove Dependency
 - **Botpress submenu in VS Code tree view**: Introduce a custom `Botpress` submenu accessible via right-click in the Explorer.
 - **Dynamic bpDependencies editing**: Enables adding or removing `bpDependencies` entries in `package.json` via GUI without manually editing the file.
 - **Automatic package.json resolution**: Dynamically finds the closest `package.json` file relative to the selected folder.
-- **Hub.md**: Automatically fills `Hub.md` file for new projects to save the user some redacting time (need to be verified though, add a validation to ensure the file was read by the user).
+- **Hub.md**: Automatically fills `Hub.md` file for new projects to (need to be verified though, add a validation to ensure the file was read by the user).
 
 ---
 

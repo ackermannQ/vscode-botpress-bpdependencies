@@ -33,13 +33,16 @@
       {
         "command": "extension.createIntegration",
         "title": "Create a new bot, integration or plugin"
+      },
+      {
+        "command": "extension.generateHubFile",
+        "title": "Generate hub.md file"
       }
     ],
     "submenus": [
       {
-        "id": "botpress.packageJsonMenu",
-        "label": "Botpress",
-        "when": "resourceFilename == package.json"
+        "id": "botpress.contextualMenu",
+        "label": "Botpress"
       },
       {
         "id": "botpress.scaffoldingMenu",
@@ -49,8 +52,7 @@
     "menus": {
       "editor/context": [
         {
-          "submenu": "botpress.packageJsonMenu",
-          "when": "resourceFilename == package.json",
+          "submenu": "botpress.contextualMenu",
           "group": "navigation"
         }
       ],
@@ -66,7 +68,7 @@
           "group": "navigation"
         }
       ],
-      "botpress.packageJsonMenu": [
+      "botpress.contextualMenu": [
         {
           "command": "extension.addBpDependency",
           "group": "navigation"
@@ -78,8 +80,23 @@
         {
           "command": "extension.addBuildScript",
           "group": "navigation"
+        },
+        {
+          "command": "extension.generateHubFile",
+          "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "title": "Botpress Hub",
+      "properties": {
+        "botpressHub.openaiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your OpenAI API Key for hub.md generation (optional).",
+          "markdownDescription": "Set your [OpenAI API Key](https://platform.openai.com/account/api-keys) to unlock unlimited hub.md generation."
+        }
+      }
     }
   },
   "scripts": {
@@ -90,5 +107,8 @@
     "@types/vscode": "^1.77.0",
     "typescript": "^4.7.0",
     "vscode": "^1.1.34"
+  },
+  "dependencies": {
+    "openai": "^4.94.0"
   }
 }

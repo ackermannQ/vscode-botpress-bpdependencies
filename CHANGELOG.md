@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.4] - 2025-04-16
+
+### Added
+
+- Generate hub.md file using AI and package.json information.
+
+### Updated
+
+- Fix only first opened json was modified for managing bpDependencies.
+
 ## [0.1.3] - 2025-04-16
 
 ### Updated
