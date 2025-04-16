@@ -2,7 +2,7 @@
   "name": "botpress-tools",
   "displayName": "Botpress tools Helper",
   "description": "VSCode extension to manage build, bpDependencies in package.json",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "engines": {
     "vscode": "^1.99.2"
   },

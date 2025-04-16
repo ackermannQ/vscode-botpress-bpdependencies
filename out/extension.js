@@ -81,7 +81,7 @@ function activate(context) {
             return;
         }
         packageJson.scripts.build =
-            packageJson.scripts.build + "bp add -y && bp build";
+            packageJson.scripts.build + " bp add -y && bp build";
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
         vscode.window.showInformationMessage("Added build script");
     }), vscode.commands.registerCommand("extension.createIntegration", (uri) => {
