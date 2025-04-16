@@ -38,19 +38,25 @@ A Visual Studio Code extension to streamline the development of [Botpress](https
 Right-click → Botpress > Add Dependency  
 Right-click → Botpress > Remove Dependency
 
-🔧 Requirements
+---
+
+## 🔧 Requirements
 
 - Node.js >= 20
 - Botpress SDK (included via workspace dependencies)
 - VS Code
 
-🧪 Future Ideas
+---
+
+## 🧪 Future Ideas
 
 - **Botpress submenu in VS Code tree view**: Introduce a custom `Botpress` submenu accessible via right-click in the Explorer.
 - **Dynamic bpDependencies editing**: Enables adding or removing `bpDependencies` entries in `package.json` via GUI without manually editing the file.
 - **Automatic package.json resolution**: Dynamically finds the closest `package.json` file relative to the selected folder.
 - **Hub.md**: Automatically fills `Hub.md` file for new projects to save the user some redacting time (need to be verified though, add a validation to ensure the file was read by the user).
 
-💙 Contributing
+---
+
+## 💙 Contributing
 
 Feel free to open issues or pull requests — your feedback helps make this tool better!
