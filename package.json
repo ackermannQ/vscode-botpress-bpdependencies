@@ -2,7 +2,7 @@
   "name": "botpress-tools",
   "displayName": "Botpress Integration Toolkit",
   "description": "VSCode extension for making your workflow faster, cleaner, and painless",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "engines": {
     "vscode": "^1.99.2"
   },
@@ -32,7 +32,15 @@
       },
       {
         "command": "extension.createIntegration",
-        "title": "Create a new bot, integration or plugin"
+        "title": "Create a new integration"
+      },
+      {
+        "command": "extension.createBot",
+        "title": "Create a new bot"
+      },
+      {
+        "command": "extension.createPlugin",
+        "title": "Create a new plugin"
       },
       {
         "command": "extension.generateHubFile",
@@ -65,6 +73,14 @@
       "botpress.scaffoldingMenu": [
         {
           "command": "extension.createIntegration",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.createBot",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.createPlugin",
           "group": "navigation"
         }
       ],

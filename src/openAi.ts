@@ -8,9 +8,10 @@ import { extensionSettings } from "./extensionSettings";
 
 export const openAi = async (context: vscode.ExtensionContext) => {
   const extensionSettingsService = extensionSettings(context);
-  let userKey = extensionSettingsService.userProvidedApiKey ?? null;
+  let userKey =
+    (await extensionSettingsService.getUserProvidedApiKey()) ?? null;
 
-  if (!extensionSettingsService.userProvidedApiKey) {
+  if (!(await extensionSettingsService.getUserProvidedApiKey())) {
     userKey = await vscode.window.showInputBox({
       prompt: "Enter your OpenAI API key",
       ignoreFocusOut: true,
@@ -18,7 +19,7 @@ export const openAi = async (context: vscode.ExtensionContext) => {
     });
 
     if (userKey) {
-      extensionSettingsService.setUserProvidedApiKey(userKey);
+      await extensionSettingsService.setUserProvidedApiKey(userKey);
     } else {
       vscode.window.showErrorMessage(
         "API key is required to use this feature."
@@ -55,7 +56,7 @@ ${hubFile}
         messages: [{ role: "user", content: prompt }],
       });
 
-      extensionSettingsService.incrementUsage();
+      await extensionSettingsService.incrementUsage();
 
       return res.choices[0]?.message?.content ?? "";
     } catch (error: any) {
@@ -76,6 +77,7 @@ ${hubFile}
 
   const hubFile = `
 Here should be a summary of the project, including a description of its purpose, features, and any relevant technical details. The summary should be concise and easy to understand, and should provide a clear overview of what the project does.
+Also, this line and the ones before should be removed from the final result.
 
 ## Configuration
 

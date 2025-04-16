@@ -11,12 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.7] - 2025-04-16
+
+### Updated
+
+- Replace storing of api key from settings to secure storage.
+
+## [0.1.6] - 2025-04-16
+
+### Updated
+
+- Split scaffoldings and fix cross platform issues.
+
 ## [0.1.5] - 2025-04-16
 
 ### Updated
 
-- Slight modification of the hub.md template to fit guidelines
-- Fix scaffolding issue
+- Slight modification of the hub.md template to fit guidelines.
+- Fix scaffolding issue.
 
 ## [0.1.4] - 2025-04-16
 

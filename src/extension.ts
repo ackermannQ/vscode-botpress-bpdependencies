@@ -114,20 +114,74 @@ export function activate(context: vscode.ExtensionContext) {
       (uri: vscode.Uri) => {
         if (!uri || !uri.fsPath) return;
 
-        const allowedFolders = ["integrations", "bots", "plugins"];
+        const allowedFolders = ["integrations"];
 
         if (uri && uri.fsPath) {
           const selectedPath = path.basename(uri.fsPath);
 
           if (!allowedFolders.includes(selectedPath)) {
             vscode.window.showWarningMessage(
-              "This action is only available while clicking on an 'integrations', 'bots' or 'plugins' folder."
+              "This action is only available while clicking on an 'integrations' folder."
             );
             return;
           }
 
           const terminal = vscode.window.createTerminal(`Botpress Init`);
-          terminal.sendText(`cd "${selectedPath}" && bp init`);
+          terminal.sendText(
+            `bp init --workDir integrations --type integration`
+          );
+          terminal.show();
+        } else {
+          vscode.window.showWarningMessage("No path selected.");
+        }
+      }
+    ),
+
+    vscode.commands.registerCommand(
+      "extension.createBot",
+      (uri: vscode.Uri) => {
+        if (!uri || !uri.fsPath) return;
+
+        const allowedFolders = ["bots"];
+
+        if (uri && uri.fsPath) {
+          const selectedPath = path.basename(uri.fsPath);
+
+          if (!allowedFolders.includes(selectedPath)) {
+            vscode.window.showWarningMessage(
+              "This action is only available while clicking on a  'bots' folder."
+            );
+            return;
+          }
+
+          const terminal = vscode.window.createTerminal(`Botpress Init`);
+          terminal.sendText(`bp init --workDir bots --type bot`);
+          terminal.show();
+        } else {
+          vscode.window.showWarningMessage("No path selected.");
+        }
+      }
+    ),
+
+    vscode.commands.registerCommand(
+      "extension.createPlugin",
+      (uri: vscode.Uri) => {
+        if (!uri || !uri.fsPath) return;
+
+        const allowedFolders = ["plugins"];
+
+        if (uri && uri.fsPath) {
+          const selectedPath = path.basename(uri.fsPath);
+
+          if (!allowedFolders.includes(selectedPath)) {
+            vscode.window.showWarningMessage(
+              "This action is only available while clicking on a 'plugins' folder."
+            );
+            return;
+          }
+
+          const terminal = vscode.window.createTerminal(`Botpress Init`);
+          terminal.sendText(`bp init --workDir plugins --type plugin`);
           terminal.show();
         } else {
           vscode.window.showWarningMessage("No path selected.");
@@ -157,8 +211,8 @@ export function activate(context: vscode.ExtensionContext) {
           // This will be the check to subscribe
           // const extensionSettingsService = extensionSettings(context);
           // if (
-          //   !extensionSettingsService.userProvidedApiKey &&
-          //   extensionSettingsService.currentUsage >= 5
+          //   !await extensionSettingsService.userProvidedApiKey &&
+          //   await extensionSettingsService.currentUsage >= 5
           // ) {
           //   vscode.window
           //     .showInformationMessage(

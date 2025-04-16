@@ -2,29 +2,34 @@ import * as vscode from "vscode";
 
 export const extensionSettings = (context: vscode.ExtensionContext) => {
   const usageKey = "botpress-openai-hub-usage-count";
-  const currentUsage = context.globalState.get<number>(usageKey) || 0;
+  const secretKey = "botpressHub.openaiApiKey";
 
-  const userProvidedApiKey = vscode.workspace
-    .getConfiguration("botpressHub")
-    .get<string>("openaiApiKey");
+  const getCurrentUsage = (): number =>
+    context.globalState.get<number>(usageKey) || 0;
 
-  const setUserProvidedApiKey = (apiKey: string) =>
-    vscode.workspace
-      .getConfiguration("botpressHub")
-      .update("openaiApiKey", apiKey, true);
+  const incrementUsage = async () => {
+    const current = context.globalState.get<number>(usageKey) || 0;
+    await context.globalState.update(usageKey, current + 1);
+  };
 
-  const incrementUsage = () => {
-    context.globalState.update(
-      usageKey,
-      context.globalState.get<number>(usageKey) + 1
-    );
+  const getUserProvidedApiKey = async (): Promise<string | undefined> => {
+    return await context.secrets.get(secretKey);
+  };
+
+  const setUserProvidedApiKey = async (apiKey: string): Promise<void> => {
+    await context.secrets.store(secretKey, apiKey);
+  };
+
+  const deleteUserProvidedApiKey = async (): Promise<void> => {
+    await context.secrets.delete(secretKey);
   };
 
   return {
     usageKey,
-    currentUsage,
-    userProvidedApiKey,
-    setUserProvidedApiKey,
+    getCurrentUsage,
     incrementUsage,
+    getUserProvidedApiKey,
+    setUserProvidedApiKey,
+    deleteUserProvidedApiKey,
   };
 };
