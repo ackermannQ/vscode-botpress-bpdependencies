@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.1.5] - 2025-04-16
+
+### Updated
+
+- Slight modification of the hub.md template to fit guidelines
+- Fix scaffolding issue
+
 ## [0.1.4] - 2025-04-16
 
 ### Added

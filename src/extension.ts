@@ -1,8 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
-import { openAi } from "./openAi";
+
 import { extensionSettings } from "./extensionSettings";
+import { openAi } from "./openAi";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -120,14 +121,13 @@ export function activate(context: vscode.ExtensionContext) {
 
           if (!allowedFolders.includes(selectedPath)) {
             vscode.window.showWarningMessage(
-              "This action is only available in an 'integrations', 'bots' or 'plugins' folder."
+              "This action is only available while clicking on an 'integrations', 'bots' or 'plugins' folder."
             );
             return;
           }
 
           const terminal = vscode.window.createTerminal(`Botpress Init`);
-          terminal.sendText("cd " + selectedPath);
-          terminal.sendText(`bp init`);
+          terminal.sendText(`cd "${selectedPath}" && bp init`);
           terminal.show();
         } else {
           vscode.window.showWarningMessage("No path selected.");

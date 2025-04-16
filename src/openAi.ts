@@ -1,7 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+
 import OpenAI from "openai";
+
 import { extensionSettings } from "./extensionSettings";
 
 export const openAi = async (context: vscode.ExtensionContext) => {
@@ -73,7 +75,7 @@ ${hubFile}
   }
 
   const hubFile = `
-# Integrate your chatbot with Confluence to fetch pages, retrieve all pages, and interact with Confluence content seamlessly
+Here should be a summary of the project, including a description of its purpose, features, and any relevant technical details. The summary should be concise and easy to understand, and should provide a clear overview of what the project does.
 
 ## Configuration
 
