@@ -85,11 +85,32 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showInformationMessage("Added build script");
     }),
 
-    vscode.commands.registerCommand("extension.createIntegration", () => {
-      const terminal = vscode.window.createTerminal(`Botpress Init`);
-      terminal.sendText(`bp init`);
-      terminal.show();
-    })
+    vscode.commands.registerCommand(
+      "extension.createIntegration",
+      (uri: vscode.Uri) => {
+        if (!uri || !uri.fsPath) return;
+
+        const allowedFolders = ["integrations", "bots", "plugins"];
+
+        if (uri && uri.fsPath) {
+          const selectedPath = path.basename(uri.fsPath);
+
+          if (!allowedFolders.includes(selectedPath)) {
+            vscode.window.showWarningMessage(
+              "This action is only available in an 'integrations', 'bots' or 'plugins' folder."
+            );
+            return;
+          }
+
+          const terminal = vscode.window.createTerminal(`Botpress Init`);
+          terminal.sendText("cd " + selectedPath);
+          terminal.sendText(`bp init`);
+          terminal.show();
+        } else {
+          vscode.window.showWarningMessage("No path selected.");
+        }
+      }
+    )
   );
 }
 
