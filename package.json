@@ -2,7 +2,7 @@
   "name": "botpress-tools",
   "displayName": "Botpress Integration Toolkit",
   "description": "VSCode extension for making your workflow faster, cleaner, and painless",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": {
     "vscode": "^1.99.2"
   },
@@ -46,6 +46,10 @@
       {
         "command": "botpress-tools.rebuildBpProject",
         "title": "Rebuild project"
+      },
+      {
+        "command": "botpress-tools.deployBpProject",
+        "title": "Deploy project"
       },
       {
         "command": "botpress-tools.generateHubFile",
@@ -176,6 +180,10 @@
         },
         {
           "submenu": "botpress.contextualBuildMenu",
+          "group": "navigation"
+        },
+        {
+          "command": "botpress-tools.deployBpProject",
           "group": "navigation"
         }
       ]

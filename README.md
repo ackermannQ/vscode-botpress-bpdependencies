@@ -11,9 +11,18 @@ A Visual Studio Code extension to streamline the development of [Botpress](https
   - Easily **add or remove dependencies** in the `bpDependencies` field of your `package.json`.
   - Auto-detect available interfaces based on your local file system.
 
+- 🛠️ **Context Menu for `Build`**
+
+  - Add a build script to the `package.json` file.
+  - Easily **rebuild the project** when definitions are changed.
+
+- 🚀 **One-click Deploy**
+
+  - Deploy the project to the Botpress Hub.
+
 - ⚙️ **Scaffold New Botpress Integrations**
 
-  - Quickly bootstrap new bots, integrations or plugins from the VS Code context menu.
+  - Quickly bootstrap new bots, integrations or plugin one cliins from the VS Code context menu.
   - Choose your destination folder among `integrations`, `bots` or `plugins` and let the extension generate the structure.
 
 - 📃 **Generate `hub.md` file**
@@ -61,8 +70,18 @@ A Visual Studio Code extension to streamline the development of [Botpress](https
 
 In the package.json file:
 
-- Right-click → Botpress > Add Dependency
-- Right-click → Botpress > Remove Dependency
+- Right-click → Botpress > bpDependencies management > Add Dependency
+- Right-click → Botpress > bpDependencies management > Remove Dependency
+
+### Add build script and rebuild project
+
+Add a build script to the `package.json` file.
+Right-click inside an `integration.definition.ts` file, Botpress > Build > Add build script.
+Right-click inside an `integration.definition.ts` file, Botpress > Build > Rebuild project.
+
+### Deploy project
+
+Right-click inside a file, Botpress > Deploy project.
 
 ### Create a new bot, integration or plugin
 
@@ -106,6 +125,11 @@ Supported keywords:
 Add an interface to the `integration.definition.ts` file and template the import and extend.
 Right-click inside an `integration.definition.ts` file, Botpress > Add interface > Select the interface to add.
 It will add the import and extend to the file, that you just need to fill.
+
+### Quick rebuild project
+
+Right-click inside an `integration.definition.ts` file, Botpress > Build > Rebuild project.
+It will rebuild the project, necessary when definitions are changed.
 
 ---
 

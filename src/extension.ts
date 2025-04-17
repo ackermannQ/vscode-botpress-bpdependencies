@@ -6,6 +6,7 @@ import * as vscode from "vscode";
 import { addBuildScript, rebuildBpProject } from "./build";
 import { getBotpressKeywordDoc } from "./doc/doc";
 import { openAi } from "./openAi";
+import { getIntegrationRoot } from "./getIntegrationRoot";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -96,6 +97,16 @@ export function activate(context: vscode.ExtensionContext) {
       "botpress-tools.rebuildBpProject",
       (uri: vscode.Uri) => rebuildBpProject(uri)
     ),
+
+    vscode.commands.registerCommand("botpress-tools.deployBpProject", () => {
+      const terminal = vscode.window.createTerminal(`Botpress Deploy`);
+      const activeEditor = vscode.window.activeTextEditor;
+      const currentPath = activeEditor.document.uri.fsPath;
+      const integrationRoot = getIntegrationRoot(path.resolve(currentPath));
+
+      terminal.sendText(`bp deploy --workDir ${integrationRoot}`);
+      terminal.show();
+    }),
 
     vscode.commands.registerCommand("botpress-tools.createIntegration", () => {
       const terminal = vscode.window.createTerminal(`Botpress Init`);
