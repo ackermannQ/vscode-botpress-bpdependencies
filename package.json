@@ -19,31 +19,31 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.addBpDependency",
+        "command": "botpress-tools.addBpDependency",
         "title": "Add bpDependency"
       },
       {
-        "command": "extension.removeBpDependency",
+        "command": "botpress-tools.removeBpDependency",
         "title": "Remove bpDependency"
       },
       {
-        "command": "extension.addBuildScript",
+        "command": "botpress-tools.addBuildScript",
         "title": "Add build script"
       },
       {
-        "command": "extension.createIntegration",
+        "command": "botpress-tools.createIntegration",
         "title": "Create a new integration"
       },
       {
-        "command": "extension.createBot",
+        "command": "botpress-tools.createBot",
         "title": "Create a new bot"
       },
       {
-        "command": "extension.createPlugin",
+        "command": "botpress-tools.createPlugin",
         "title": "Create a new plugin"
       },
       {
-        "command": "extension.generateHubFile",
+        "command": "botpress-tools.generateHubFile",
         "title": "Generate hub.md file"
       }
     ],
@@ -72,33 +72,33 @@
       ],
       "botpress.scaffoldingMenu": [
         {
-          "command": "extension.createIntegration",
+          "command": "botpress-tools.createIntegration",
           "group": "navigation"
         },
         {
-          "command": "extension.createBot",
+          "command": "botpress-tools.createBot",
           "group": "navigation"
         },
         {
-          "command": "extension.createPlugin",
+          "command": "botpress-tools.createPlugin",
           "group": "navigation"
         }
       ],
       "botpress.contextualMenu": [
         {
-          "command": "extension.addBpDependency",
+          "command": "botpress-tools.addBpDependency",
           "group": "navigation"
         },
         {
-          "command": "extension.removeBpDependency",
+          "command": "botpress-tools.removeBpDependency",
           "group": "navigation"
         },
         {
-          "command": "extension.addBuildScript",
+          "command": "botpress-tools.addBuildScript",
           "group": "navigation"
         },
         {
-          "command": "extension.generateHubFile",
+          "command": "botpress-tools.generateHubFile",
           "group": "navigation"
         }
       ]
