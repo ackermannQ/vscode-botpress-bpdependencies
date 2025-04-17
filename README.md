@@ -78,6 +78,16 @@ This will check if the file is [correctly configured](https://botpress.mintlify.
 ### Embeded documentation preview
 
 On some keywords, show a preview of the documentation and a link to the full online documentation.
+Supported keywords:
+
+- IntegrationDefinition
+- events
+- actions
+- interfaces
+- channels
+- entities
+- hitl
+- files-readonly
 
 ### Quick add interface
 
