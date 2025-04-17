@@ -44,6 +44,10 @@
         "title": "Add build script"
       },
       {
+        "command": "botpress-tools.rebuildBpProject",
+        "title": "Rebuild project"
+      },
+      {
         "command": "botpress-tools.generateHubFile",
         "title": "Generate hub.md file"
       },
@@ -72,6 +76,10 @@
       {
         "id": "botpress.contextualMenu",
         "label": "Botpress"
+      },
+      {
+        "id": "botpress.contextualBuildMenu",
+        "label": "Build"
       },
       {
         "id": "botpress.bpDependenciesMenu",
@@ -113,6 +121,16 @@
           "group": "navigation"
         }
       ],
+      "botpress.contextualBuildMenu": [
+        {
+          "command": "botpress-tools.rebuildBpProject",
+          "group": "navigation"
+        },
+        {
+          "command": "botpress-tools.addBuildScript",
+          "group": "navigation"
+        }
+      ],
       "botpress.bpDependenciesMenu": [
         {
           "command": "botpress-tools.addBpDependency",
@@ -145,10 +163,6 @@
       ],
       "botpress.contextualMenu": [
         {
-          "command": "botpress-tools.addBuildScript",
-          "group": "navigation"
-        },
-        {
           "command": "botpress-tools.generateHubFile",
           "group": "navigation"
         },
@@ -158,6 +172,10 @@
         },
         {
           "submenu": "botpress.bpDependenciesMenu",
+          "group": "navigation"
+        },
+        {
+          "submenu": "botpress.contextualBuildMenu",
           "group": "navigation"
         }
       ]

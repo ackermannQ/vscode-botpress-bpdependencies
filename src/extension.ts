@@ -1,10 +1,11 @@
 import * as fs from "fs";
 import * as path from "path";
-import * as vscode from "vscode";
 import { Project } from "ts-morph";
+import * as vscode from "vscode";
 
-import { openAi } from "./openAi";
+import { addBuildScript, rebuildBpProject } from "./build";
 import { getBotpressKeywordDoc } from "./doc/doc";
+import { openAi } from "./openAi";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -89,37 +90,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     vscode.commands.registerCommand(
       "botpress-tools.addBuildScript",
-      async () => {
-        const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
-        const activeEditor = vscode.window.activeTextEditor;
-        if (!activeEditor) {
-          vscode.window.showErrorMessage("No active editor found.");
-          return;
-        }
-
-        let packageJsonPath = activeEditor.document.uri.fsPath;
-        const packageJsonfolderPath = path.dirname(packageJsonPath);
-
-        if (!workspaceRoot) return;
-        packageJsonPath = path.join(packageJsonfolderPath, "package.json");
-
-        const packageJson = JSON.parse(
-          fs.readFileSync(packageJsonPath, "utf-8")
-        );
-        if (!packageJson.scripts.build) packageJson.scripts.build = "";
-
-        if (packageJson.scripts.build === "bp add -y && bp build") {
-          vscode.window.showErrorMessage(
-            "Botpress build script already exists"
-          );
-          return;
-        }
-
-        packageJson.scripts.build =
-          packageJson.scripts.build + " && bp add -y && bp build";
-        fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-        vscode.window.showInformationMessage("Added build script");
-      }
+      addBuildScript
+    ),
+    vscode.commands.registerCommand(
+      "botpress-tools.rebuildBpProject",
+      (uri: vscode.Uri) => rebuildBpProject(uri)
     ),
 
     vscode.commands.registerCommand("botpress-tools.createIntegration", () => {
@@ -279,7 +254,7 @@ export function activate(context: vscode.ExtensionContext) {
     ),
 
     vscode.languages.registerHoverProvider("typescript", {
-      provideHover(document, position, token) {
+      provideHover(document, position) {
         const range = document.getWordRangeAtPosition(
           position,
           /['"`]?[a-zA-Z0-9_-]+['"`]?/
