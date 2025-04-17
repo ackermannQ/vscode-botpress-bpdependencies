@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+import { getIntegrationRoot } from "./getIntegrationRoot";
 
 export const addBuildScript = async () => {
   const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
@@ -30,20 +31,12 @@ export const addBuildScript = async () => {
   vscode.window.showInformationMessage("Added build script");
 };
 
-export const rebuildBpProject = (uri: vscode.Uri) => {
-  const filePath = uri.fsPath;
-
-  if (path.basename(filePath) !== "integration.definition.ts") {
-    vscode.window.showErrorMessage(
-      "Please run this command on an 'integration.definition.ts' file."
-    );
-    return;
-  }
-
+export const rebuildBpProject = () => {
   const terminal = vscode.window.createTerminal(`Botpress Rebuild`);
   const activeEditor = vscode.window.activeTextEditor;
   const currentPath = activeEditor.document.uri.fsPath;
+  const integrationRoot = getIntegrationRoot(path.resolve(currentPath));
 
-  terminal.sendText(`bp build --workDir ${path.dirname(currentPath)}`);
+  terminal.sendText(`bp build --workDir ${integrationRoot}`);
   terminal.show();
 };

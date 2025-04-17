@@ -95,7 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
     ),
     vscode.commands.registerCommand(
       "botpress-tools.rebuildBpProject",
-      (uri: vscode.Uri) => rebuildBpProject(uri)
+      rebuildBpProject
     ),
 
     vscode.commands.registerCommand("botpress-tools.deployBpProject", () => {
