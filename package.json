@@ -62,6 +62,10 @@
       {
         "command": "botpress-tools.integrationSanityCheck",
         "title": "Check Integration Definition file"
+      },
+      {
+        "command": "botpress-tools.addExtendInterface",
+        "title": "Add interface"
       }
     ],
     "submenus": [
@@ -140,6 +144,10 @@
         },
         {
           "command": "botpress-tools.generateHubFile",
+          "group": "navigation"
+        },
+        {
+          "command": "botpress-tools.addExtendInterface",
           "group": "navigation"
         }
       ]

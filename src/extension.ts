@@ -295,7 +295,51 @@ export function activate(context: vscode.ExtensionContext) {
         markdown.isTrusted = true;
         return new vscode.Hover(markdown, range);
       },
-    })
+    }),
+
+    vscode.commands.registerCommand(
+      "botpress-tools.addExtendInterface",
+      async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+          vscode.window.showErrorMessage("No active editor");
+          return;
+        }
+
+        let packageJsonPath = editor.document.uri.fsPath;
+        const packageJsonfolderPath = path.dirname(packageJsonPath);
+
+        packageJsonPath = path.join(packageJsonfolderPath, "package.json");
+
+        const packageJson = JSON.parse(
+          fs.readFileSync(packageJsonPath, "utf-8")
+        );
+        const options = Object.keys(packageJson.bpDependencies);
+
+        const dependency = await vscode.window.showQuickPick(options, {
+          placeHolder: "Select an interface to add",
+        });
+
+        if (!dependency) return;
+
+        const importLine = `import ${dependency} from './bp_modules/${dependency}'\n`;
+        const extendSnippet = `\n  .extend(${dependency}, ({ entities }) => ({\n    // TODO: fill in entities/actions\n  }))`;
+
+        const doc = editor.document;
+
+        const importPos = new vscode.Position(0, 0);
+        const extendPos = new vscode.Position(doc.lineCount - 1, 0);
+
+        await editor.edit((editBuilder) => {
+          editBuilder.insert(importPos, importLine);
+          editBuilder.insert(extendPos, extendSnippet);
+        });
+
+        vscode.window.showInformationMessage(
+          `Added ${dependency} import and extend.`
+        );
+      }
+    )
   );
 }
 

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Possibility to key bind the commands to a keyboard shortcut.
 - Automated integration definition file sanity check.
 - Preview of the documentation and a link to the full online documentation on some keywords.
+- Quick add interface in `integration.definition.ts` file.
 
 ## [0.1.7] - 2025-04-16
 

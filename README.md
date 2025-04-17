@@ -79,6 +79,12 @@ This will check if the file is [correctly configured](https://botpress.mintlify.
 
 On some keywords, show a preview of the documentation and a link to the full online documentation.
 
+### Quick add interface
+
+Add an interface to the `integration.definition.ts` file and template the import and extend.
+Right-click inside an `integration.definition.ts` file, Botpress > Add interface > Select the interface to add.
+It will add the import and extend to the file, that you just need to fill.
+
 ---
 
 ## 🔧 Requirements
