@@ -2,7 +2,7 @@
   "name": "botpress-tools",
   "displayName": "Botpress Integration Toolkit",
   "description": "VSCode extension for making your workflow faster, cleaner, and painless",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "engines": {
     "vscode": "^1.99.2"
   },
@@ -14,9 +14,22 @@
     "Linters"
   ],
   "icon": "icon.png",
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:typescript"
+  ],
   "main": "./out/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "typescript",
+        "extensions": [
+          ".ts"
+        ],
+        "aliases": [
+          "TypeScript"
+        ]
+      }
+    ],
     "commands": [
       {
         "command": "botpress-tools.addBpDependency",
@@ -31,6 +44,10 @@
         "title": "Add build script"
       },
       {
+        "command": "botpress-tools.generateHubFile",
+        "title": "Generate hub.md file"
+      },
+      {
         "command": "botpress-tools.createIntegration",
         "title": "Create a new integration"
       },
@@ -43,8 +60,8 @@
         "title": "Create a new plugin"
       },
       {
-        "command": "botpress-tools.generateHubFile",
-        "title": "Generate hub.md file"
+        "command": "botpress-tools.integrationSanityCheck",
+        "title": "Check Integration Definition file"
       }
     ],
     "submenus": [
@@ -53,8 +70,16 @@
         "label": "Botpress"
       },
       {
+        "id": "botpress.mainMenu",
+        "label": "Botpress"
+      },
+      {
         "id": "botpress.scaffoldingMenu",
-        "label": "Botpress: Scaffolding"
+        "label": "Scaffolding"
+      },
+      {
+        "id": "botpress.integrationsMenu",
+        "label": "Integrations"
       }
     ],
     "menus": {
@@ -66,7 +91,23 @@
       ],
       "explorer/context": [
         {
+          "submenu": "botpress.mainMenu",
+          "group": "navigation"
+        }
+      ],
+      "botpress.mainMenu": [
+        {
           "submenu": "botpress.scaffoldingMenu",
+          "group": "navigation"
+        },
+        {
+          "submenu": "botpress.integrationsMenu",
+          "group": "navigation"
+        }
+      ],
+      "botpress.integrationsMenu": [
+        {
+          "command": "botpress-tools.integrationSanityCheck",
           "group": "navigation"
         }
       ],
@@ -125,6 +166,7 @@
     "vscode": "^1.1.34"
   },
   "dependencies": {
-    "openai": "^4.94.0"
+    "openai": "^4.94.0",
+    "ts-morph": "^25.0.1"
   }
 }

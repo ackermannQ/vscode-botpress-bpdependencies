@@ -1,9 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+import { Project } from "ts-morph";
 
-import { extensionSettings } from "./extensionSettings";
 import { openAi } from "./openAi";
+import { getBotpressKeywordDoc } from "./doc/doc";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -200,7 +201,101 @@ export function activate(context: vscode.ExtensionContext) {
           );
         }
       }
-    )
+    ),
+
+    vscode.commands.registerCommand(
+      "botpress-tools.integrationSanityCheck",
+      (uri: vscode.Uri) => {
+        const filePath = uri.fsPath;
+
+        if (path.basename(filePath) !== "integration.definition.ts") {
+          vscode.window.showErrorMessage(
+            "Please run this command on an 'integration.definition.ts' file."
+          );
+          return;
+        }
+
+        if (!fs.existsSync(filePath)) {
+          vscode.window.showErrorMessage(
+            `integration.definition.ts not found at ${filePath}`
+          );
+          return;
+        }
+
+        const project = new Project();
+        const sourceFile = project.addSourceFileAtPath(filePath);
+
+        const integrationDefinition = sourceFile.getFirstDescendant((node) =>
+          node.getText().startsWith("new IntegrationDefinition")
+        );
+
+        if (!integrationDefinition) {
+          vscode.window.showErrorMessage(
+            "Could not find IntegrationDefinition in the file."
+          );
+          return;
+        }
+
+        const requiredFields = ["title", "description", "icon", "readme"];
+        const missingFields: string[] = [];
+
+        requiredFields.forEach((field) => {
+          if (!integrationDefinition.getText().includes(`${field}:`)) {
+            missingFields.push(field);
+          }
+        });
+
+        const parentFolder = path.dirname(filePath);
+        const missingFiles: string[] = [];
+        if (!fs.existsSync(path.join(parentFolder, "hub.md")))
+          missingFiles.push("hub.md");
+        if (!fs.existsSync(path.join(parentFolder, "icon.svg")))
+          missingFiles.push("icon.svg");
+
+        if (missingFields.length || missingFiles.length) {
+          const msg = [
+            missingFields.length
+              ? `Missing field${
+                  missingFields.length > 1 ? "s" : ""
+                }: ${missingFields.join(", ")}`
+              : "",
+            missingFiles.length
+              ? `Missing file${
+                  missingFields.length > 1 ? "s" : ""
+                }: ${missingFiles.join(", ")}`
+              : "",
+          ]
+            .filter(Boolean)
+            .join("\n");
+
+          vscode.window.showErrorMessage(`Validation failed:\n${msg}`);
+          return;
+        }
+
+        vscode.window.showInformationMessage(
+          "✅ Integration is correctly configured!"
+        );
+      }
+    ),
+
+    vscode.languages.registerHoverProvider("typescript", {
+      provideHover(document, position, token) {
+        const range = document.getWordRangeAtPosition(
+          position,
+          /['"`]?[a-zA-Z0-9_-]+['"`]?/
+        );
+        if (!range) return null;
+
+        const word = document.getText(range).replace(/^['"`]|['"`]$/g, "");
+        const doc = getBotpressKeywordDoc(word);
+
+        if (!doc) return null;
+
+        const markdown = new vscode.MarkdownString(doc);
+        markdown.isTrusted = true;
+        return new vscode.Hover(markdown, range);
+      },
+    })
   );
 }
 
