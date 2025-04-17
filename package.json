@@ -74,6 +74,10 @@
         "label": "Botpress"
       },
       {
+        "id": "botpress.bpDependenciesMenu",
+        "label": "bpDependencies management"
+      },
+      {
         "id": "botpress.mainMenu",
         "label": "Botpress"
       },
@@ -109,6 +113,16 @@
           "group": "navigation"
         }
       ],
+      "botpress.bpDependenciesMenu": [
+        {
+          "command": "botpress-tools.addBpDependency",
+          "group": "navigation"
+        },
+        {
+          "command": "botpress-tools.removeBpDependency",
+          "group": "navigation"
+        }
+      ],
       "botpress.integrationsMenu": [
         {
           "command": "botpress-tools.integrationSanityCheck",
@@ -131,14 +145,6 @@
       ],
       "botpress.contextualMenu": [
         {
-          "command": "botpress-tools.addBpDependency",
-          "group": "navigation"
-        },
-        {
-          "command": "botpress-tools.removeBpDependency",
-          "group": "navigation"
-        },
-        {
           "command": "botpress-tools.addBuildScript",
           "group": "navigation"
         },
@@ -148,6 +154,10 @@
         },
         {
           "command": "botpress-tools.addExtendInterface",
+          "group": "navigation"
+        },
+        {
+          "submenu": "botpress.bpDependenciesMenu",
           "group": "navigation"
         }
       ]
