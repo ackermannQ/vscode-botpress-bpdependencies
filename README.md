@@ -21,9 +21,21 @@ A Visual Studio Code extension to streamline the development of [Botpress](https
   - Generate a `hub.md` file based on your `package.json` information.
   - Use the AI to generate a concise and helpful `hub.md` that documents what this project is.
 
-- 📃 **Create key-bindings**
+- ⌨️ **Create key-bindings**
 
-- Create key-bindings to work even faster and more efficiently by assigning keyboard shortcuts to the commands.
+  - Create key-bindings to work even faster and more efficiently by assigning keyboard shortcuts to the commands.
+
+- ✅ **Integration Definition file check**
+
+  - Check if the `integration.definition.ts` file is correctly configured and if all required files are present.
+
+- 📄 **Embeded documentation preview**
+
+  - On some keywords, show a preview of the documentation and a link to the full online documentation.
+
+- ➕ **Quick add interface**
+
+  - Add an interface to the `integration.definition.ts` file and template the import and extend.
 
 ---
 
@@ -110,8 +122,7 @@ It will add the import and extend to the file, that you just need to fill.
 - **Botpress submenu in VS Code tree view**: Introduce a custom `Botpress` submenu accessible via right-click in the Explorer.
 - **Dynamic bpDependencies editing**: Enables adding or removing `bpDependencies` entries in `package.json` via GUI without manually editing the file.
 - **Set terminal path**: Set the terminal path to the integration we are working in (easier to rebuild when updating actions, entities or anything that needs to be rebuilt).
-- **Add integration helper**: in the integration.definition.ts file, make it easier to add new integrations.
-- **Embeded documentation preview**: On some keywords, show a preview of the documentation.
+- **Support for bots and plugins**: Add the same kind of support like integrations for bots and plugins.
 
 ---
 
