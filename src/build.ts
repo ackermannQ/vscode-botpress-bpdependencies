@@ -25,6 +25,11 @@ export const addBuildScript = async () => {
     return;
   }
 
+  if (packageJson.scripts.build === "") {
+    packageJson.scripts.build = "bp add -y && bp build";
+    return;
+  }
+
   packageJson.scripts.build =
     packageJson.scripts.build + " && bp add -y && bp build";
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));

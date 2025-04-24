@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.2] - 2025-04-24
+
+### Update
+
+- Add integrations and interfaces to the bpDependencies menu.
+- The integrations and interfaces are retrieved from the api and sorted by name and version.
+
 ## [0.2.1] - 2025-04-17
 
 ### Add

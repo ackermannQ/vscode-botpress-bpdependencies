@@ -3,57 +3,25 @@ import * as path from "path";
 import { Project } from "ts-morph";
 import * as vscode from "vscode";
 
+import {
+  addBpDependencyIntegration,
+  addBpDependencyInterface,
+} from "./bpDependencies";
 import { addBuildScript, rebuildBpProject } from "./build";
 import { getBotpressKeywordDoc } from "./doc/doc";
-import { openAi } from "./openAi";
 import { getIntegrationRoot } from "./getIntegrationRoot";
+import { openAi } from "./openAi";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "botpress-tools.addBpDependency",
-      async () => {
-        const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
-        const activeEditor = vscode.window.activeTextEditor;
-        if (!activeEditor) {
-          vscode.window.showErrorMessage("No active editor found.");
-          return;
-        }
+      "botpress-tools.addBpDependencyInterface",
+      addBpDependencyInterface
+    ),
 
-        let packageJsonPath = activeEditor.document.uri.fsPath;
-        const packageJsonfolderPath = path.dirname(packageJsonPath);
-
-        if (!workspaceRoot) return;
-
-        packageJsonPath = path.join(packageJsonfolderPath, "package.json");
-        const interfacesPath = path.resolve(workspaceRoot, "interfaces");
-        if (!fs.existsSync(interfacesPath)) {
-          vscode.window.showErrorMessage(
-            "Interfaces folder not found at " + interfacesPath
-          );
-          return;
-        }
-
-        const options = fs
-          .readdirSync(interfacesPath)
-          .filter((f) =>
-            fs.lstatSync(path.join(interfacesPath, f)).isDirectory()
-          );
-
-        const selected = await vscode.window.showQuickPick(options, {
-          placeHolder: "Select an interface to add",
-        });
-        if (!selected) return;
-
-        const packageJson = JSON.parse(
-          fs.readFileSync(packageJsonPath, "utf-8")
-        );
-        if (!packageJson.bpDependencies) packageJson.bpDependencies = {};
-        packageJson.bpDependencies[selected] = `../../interfaces/${selected}`;
-
-        fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-        vscode.window.showInformationMessage(`Added bpDependency: ${selected}`);
-      }
+    vscode.commands.registerCommand(
+      "botpress-tools.addBpDependencyIntegration",
+      addBpDependencyIntegration
     ),
 
     vscode.commands.registerCommand(

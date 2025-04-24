@@ -128,7 +128,7 @@ It will add the import and extend to the file, that you just need to fill.
 
 ### Quick rebuild project
 
-Right-click inside an `integration.definition.ts` file, Botpress > Build > Rebuild project.
+Right-click inside file, Botpress > Build > Rebuild project.
 It will rebuild the project, necessary when definitions are changed.
 
 ---

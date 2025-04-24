@@ -2,7 +2,7 @@
   "name": "botpress-tools",
   "displayName": "Botpress Integration Toolkit",
   "description": "VSCode extension for making your workflow faster, cleaner, and painless",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "engines": {
     "vscode": "^1.99.2"
   },
@@ -32,8 +32,12 @@
     ],
     "commands": [
       {
-        "command": "botpress-tools.addBpDependency",
-        "title": "Add bpDependency"
+        "command": "botpress-tools.addBpDependencyInterface",
+        "title": "Add Interface"
+      },
+      {
+        "command": "botpress-tools.addBpDependencyIntegration",
+        "title": "Add Integration"
       },
       {
         "command": "botpress-tools.removeBpDependency",
@@ -137,7 +141,11 @@
       ],
       "botpress.bpDependenciesMenu": [
         {
-          "command": "botpress-tools.addBpDependency",
+          "command": "botpress-tools.addBpDependencyInterface",
+          "group": "navigation"
+        },
+        {
+          "command": "botpress-tools.addBpDependencyIntegration",
           "group": "navigation"
         },
         {
@@ -210,6 +218,7 @@
     "vscode": "^1.1.34"
   },
   "dependencies": {
+    "@botpress/client": "^1.4.0",
     "openai": "^4.94.0",
     "ts-morph": "^25.0.1"
   }

@@ -37,7 +37,9 @@ Integrations can implement standard interfaces defined by the Botpress Team to p
     channels: `### \`channels\`
 Interfaces can define communication channel requirements that integrations must implement.
 
-[Doc](https://botpress.mintlify.app/for-developers/sdk/interface/introduction#channels)`,
+[Doc](https://botpress.mintlify.app/for-developers/sdk/interface/introduction#channels)
+
+[Implementation Doc](https://botpress.mintlify.app/for-developers/sdk/integration/messaging)`,
 
     entities: `### \`entities\`
 Entities define standardized data structures for an interface. They:
