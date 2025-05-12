@@ -1,9 +1,8 @@
-import * as client from "@botpress/client";
-import { Client } from "@botpress/client";
 import { exec } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
+
 const util = require("util");
 const execAsync = util.promisify(exec);
 
@@ -38,9 +37,9 @@ export const addBpDependency = async (connectorType: string) => {
   packageJsonPath = path.join(packageJsonfolderPath, "package.json");
 
   const currentPath = activeEditor.document.uri.fsPath;
-  const integrationRoot = getIntegrationRoot(path.resolve(currentPath));
+  const root = getIntegrationRoot(path.resolve(currentPath));
 
-  let connectors = await getConnector(integrationRoot, connectorType);
+  let connectors = await getConnector(root, connectorType);
   const sortedConnectors = connectors
     .slice()
     .sort((a: ConnectorInfo, b: ConnectorInfo) => {
@@ -67,6 +66,10 @@ export const addBpDependency = async (connectorType: string) => {
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
   vscode.window.showInformationMessage(`Added bpDependency: ${selected}`);
+  await execAsync("bp add", {
+    cwd: root,
+  });
+  vscode.window.showInformationMessage("bp add over");
 };
 
 async function getConnector(integrationRoot: string, connectorType: string) {

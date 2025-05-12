@@ -1,7 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
-import { getIntegrationRoot } from "./getIntegrationRoot";
+
+import {
+  getBotRoot,
+  getIntegrationRoot,
+  getPluginRoot,
+} from "./getIntegrationRoot";
 
 export const addBuildScript = async () => {
   const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
@@ -40,8 +45,15 @@ export const rebuildBpProject = () => {
   const terminal = vscode.window.createTerminal(`Botpress Rebuild`);
   const activeEditor = vscode.window.activeTextEditor;
   const currentPath = activeEditor.document.uri.fsPath;
-  const integrationRoot = getIntegrationRoot(path.resolve(currentPath));
+  let root = getIntegrationRoot(path.resolve(currentPath));
 
-  terminal.sendText(`bp build --workDir ${integrationRoot}`);
+  if (!root) {
+    root = getBotRoot(path.resolve(currentPath));
+    if (!root) {
+      root = getPluginRoot(path.resolve(currentPath));
+    }
+  }
+
+  terminal.sendText(`bp build --workDir ${root}`);
   terminal.show();
 };

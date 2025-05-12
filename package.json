@@ -2,7 +2,7 @@
   "name": "botpress-tools",
   "displayName": "Botpress Integration Toolkit",
   "description": "VSCode extension for making your workflow faster, cleaner, and painless",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "engines": {
     "vscode": "^1.99.2"
   },
